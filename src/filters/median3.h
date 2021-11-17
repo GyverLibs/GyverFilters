@@ -1,34 +1,19 @@
 // быстрый медианный фильтр 3-го порядка
 
-#ifndef GMedian3_h
-#define GMedian3_h
-#include <Arduino.h>
+#ifndef _GMedian3_h
+#define _GMedian3_h
 
 template < typename TYPE >
 class GMedian3 {
 public:
     TYPE filtered(TYPE value) {	// возвращает фильтрованное значение
-        buffer[_counter] = value;
+        buf[_counter] = value;
         if (++_counter > 2) _counter = 0;
-        
-        TYPE middle;	
-        
-        if ((buffer[0] <= buffer[1]) && (buffer[0] <= buffer[2])) {
-            middle = (buffer[1] <= buffer[2]) ? buffer[1] : buffer[2];
-        }
-        else {
-            if ((buffer[1] <= buffer[0]) && (buffer[1] <= buffer[2])) {
-                middle = (buffer[0] <= buffer[2]) ? buffer[0] : buffer[2];
-            }
-            else {
-                middle = (buffer[0] <= buffer[1]) ? buffer[0] : buffer[1];
-            }
-        }
-        return middle;
+        return (max(buf[0], buf[1]) == max(buf[1], buf[2])) ? max(buf[0], buf[2]) : max(buf[1], min(buf[0], buf[2]));
     }
     
 private:
-    TYPE buffer[3];
+    TYPE buf[3];
     uint8_t _counter = 0;
 };
 #endif

@@ -1,8 +1,7 @@
 // быстрый целочисленный экспоненциальный фильтр
 
-#ifndef FastFilter_h
-#define FastFilter_h
-#include <Arduino.h>
+#ifndef _FastFilter_h
+#define _FastFilter_h
 
 #define FF_PASS_MAX 1
 #define FF_PASS_MIN 2
@@ -10,13 +9,13 @@
 class FastFilter {
 public:
     // коэффициент 0-31
-    FastFilter(byte k = 20, int dt = 0) {
+    FastFilter(uint8_t k = 20, int dt = 0) {
         setK(k);
         setDt(dt);
     }
     
     // коэффициент 0-31
-    void setK(byte k) {
+    void setK(uint8_t k) {
         _k1 = k;
         _k2 = 32 - k;
     }
@@ -27,7 +26,7 @@ public:
     }
     
     // установить режим пропуска (FF_PASS_MAX / FF_PASS_MIN)
-    void setPass(byte pass) {
+    void setPass(uint8_t pass) {
         _pass = pass;
     }
     
@@ -79,8 +78,8 @@ public:
 private:
     uint32_t _tmr = 0;
     int _dt = 0;
-    byte _k1 = 20, _k2 = 12;
-    byte _pass = 0;
+    uint8_t _k1 = 20, _k2 = 12;
+    uint8_t _pass = 0;
     int _raw_f = 0, _raw = 0;
 };
 #endif

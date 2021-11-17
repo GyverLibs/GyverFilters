@@ -1,16 +1,15 @@
 // медианный фильтр N-го порядка
 
-#ifndef GMedian_h
-#define GMedian_h
-#include <Arduino.h>
+#ifndef _GMedian_h
+#define _GMedian_h
 
-template < int SIZE, typename TYPE >
+template < uint8_t SIZE, typename TYPE >
 class GMedian {
 public:
     TYPE filtered(TYPE newVal) {
         buffer[_count] = newVal;
-        if ((_count < _numRead - 1) && (buffer[_count] > buffer[_count + 1])) {
-            for (int i = _count; i < _numRead - 1; i++) {
+        if ((_count < SIZE - 1) && (buffer[_count] > buffer[_count + 1])) {
+            for (int i = _count; i < SIZE - 1; i++) {
                 if (buffer[i] > buffer[i + 1]) {
                     TYPE buff = buffer[i];
                     buffer[i] = buffer[i + 1];
@@ -18,7 +17,7 @@ public:
                 }
             }
         } else {
-            if ((_count > 0) and (buffer[_count - 1] > buffer[_count])) {
+            if ((_count > 0) && (buffer[_count - 1] > buffer[_count])) {
                 for (int i = _count; i > 0; i--) {
                     if (buffer[i] < buffer[i - 1]) {
                         TYPE buff = buffer[i];
@@ -28,12 +27,11 @@ public:
                 }
             }
         }
-        if (++_count >= _numRead) _count = 0;
-        return buffer[(int)_numRead / 2];
+        if (++_count >= SIZE) _count = 0;
+        return buffer[SIZE / 2];
     }
 private:
     TYPE buffer[SIZE];
-    byte _count = 0;
-    byte _numRead = SIZE;
+    uint8_t _count = 0;
 };
 #endif

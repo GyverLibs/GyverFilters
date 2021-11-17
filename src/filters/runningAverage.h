@@ -1,8 +1,7 @@
 // экспоненциальное бегущее среднее
 
-#ifndef GFilterRA_h
-#define GFilterRA_h
-#include <Arduino.h>
+#ifndef _GFilterRA_h
+#define _GFilterRA_h
 
 class GFilterRA {
 public:

@@ -1,8 +1,7 @@
 // бегущее среднее с кольцевым буфером
 
-#ifndef RingAverage_h
-#define RingAverage_h
-#include <Arduino.h>
+#ifndef _RingAverage_h
+#define _RingAverage_h
 
 template < typename TYPE, int SIZE >
 class RingAverage {

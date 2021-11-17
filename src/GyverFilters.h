@@ -26,10 +26,12 @@
     v2.1: Исправлен расчёт дельты в линейном фильтре
     v2.2: Исправлена ошибка компиляции
     v3.0: Добавлен FastFilter и RingAverage
+    v3.1: Оптимизация кода у многих фильтров
 */
 
-#ifndef GyverFilters_h
-#define GyverFilters_h
+#ifndef _GyverFilters_h
+#define _GyverFilters_h
+#include <Arduino.h>
 #include <filters/alfaBeta.h>
 #include <filters/kalman.h>
 #include <filters/linear.h>
@@ -38,6 +40,4 @@
 #include <filters/runningAverage.h>
 #include <filters/FastFilter.h>
 #include <filters/RingAverage.h>
-
-
 #endif

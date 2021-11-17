@@ -1,16 +1,19 @@
 // упрощённый Калман для одномерного случая
 
-#ifndef GKalman_h
-#define GKalman_h
-#include <Arduino.h>
+#ifndef _GKalman_h
+#define _GKalman_h
 
 class GKalman {
 public:
     // разброс измерения, разброс оценки, скорость изменения значений
-    GKalman(float mea_e, float est_e, float q) { setParameters(mea_e, est_e, q); }
+    GKalman(float mea_e, float est_e, float q) {
+        setParameters(mea_e, est_e, q);
+    }
     
     // разброс измерения, скорость изменения значений (разброс измерения принимается равным разбросу оценки)
-    GKalman(float mea_e, float q) {GKalman::setParameters(mea_e, mea_e, q);}
+    GKalman(float mea_e, float q) {
+        setParameters(mea_e, mea_e, q);
+    }
     
     // разброс измерения, разброс оценки, скорость изменения значений
     void setParameters(float mea_e, float est_e, float q) {
@@ -20,7 +23,9 @@ public:
     }
     
     // разброс измерения, скорость изменения значений (разброс измерения принимается равным разбросу оценки)
-    void setParameters(float mea_e, float q) {setParameters(mea_e, mea_e, q);}
+    void setParameters(float mea_e, float q) {
+        setParameters(mea_e, mea_e, q);
+    }
     
     // возвращает фильтрованное значение
     float filtered(float value) {		
