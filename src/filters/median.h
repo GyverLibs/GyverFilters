@@ -42,7 +42,7 @@ struct GMedian
         }
         else if ((cur != 0) && disordered(cur - 1))
         {
-            for (size_t i = cur; (cur != 0) && disordered(i - 1); --i)
+            for (size_t i = cur; (i != 0) && disordered(i - 1); --i)
             {
                 std::swap(position[ordered_values[i - 1].second], position[ordered_values[i].second]);
                 std::swap(ordered_values[i - 1], ordered_values[i]);
@@ -131,6 +131,30 @@ struct GMedian <T, 3>
 
 private:
     std::array <T, 3> values;
+    size_t index;
+};
+
+
+template <typename T>
+struct GMedian <T, 4>
+{
+    GMedian (T value = T()) :
+        values{value, value, value, value},
+        index(0)
+    {}
+
+    T filtered (T value)
+    {
+        values[index] = std::move(value);
+        if (++index == 4)
+            index = 0;
+        
+        return (std::max(std::min(values[0], values[1]), std::min(values[2], values[3])) + 
+                std::min(std::max(values[0], values[1]), std::max(values[2], values[3]))) / 2;
+    }
+
+private:
+    std::array <T, 4> values;
     size_t index;
 };
 
