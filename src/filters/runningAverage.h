@@ -5,21 +5,52 @@
 
 class GFilterRA {
 public:
-    GFilterRA();								// инициализация фильтра
-    GFilterRA(float coef);						// расширенная инициализация фильтра (коэффициент)
-    GFilterRA(float coef, uint16_t interval);	// расширенная инициализация фильтра (коэффициент, шаг фильтрации)
-    void setCoef(float coef);	    			// настройка коэффициента фильтрации (0.00 - 1.00). Чем меньше, тем плавнее
-    void setStep(uint16_t interval);			// установка шага фильтрации (мс). Чем меньше, тем резче фильтр
+    GFilterRA(){}
     
-    float filteredTime(int16_t value);			// возвращает фильтрованное значение с опорой на встроенный таймер	
-    float filtered(int16_t value);				// возвращает фильтрованное значение
+    GFilterRA(float coef, int interval) {
+        _coef = coef;
+        _prd = interval;
+    }
+
+    GFilterRA(float coef) {
+        _coef = coef;
+    }
+
+    void setCoef(float coef) {
+        _coef = coef;
+    }
     
-    float filteredTime(float value);			// возвращает фильтрованное значение с опорой на встроенный таймер	
-    float filtered(float value);				// возвращает фильтрованное значение
+    void setStep(int interval) {
+        _prd = interval;
+    }
+
+    float filteredTime(int value) {
+        if (millis() - _tmr >= _prd) {
+            _tmr = millis();
+            filtered(value);
+        }
+        return _fil;
+    }
+
+    float filteredTime(float value) {
+        if (millis() - _tmr >= _prd) {
+            _tmr = millis();
+            filtered(value);
+        }
+        return _fil;
+    }
+
+    float filtered(int value) {
+        return _fil += (float)(value - _fil) * _coef;
+    }
+
+    float filtered(float value) {
+        return _fil += (float)(value - _fil) * _coef;
+    }
     
 private:
-    float _coef = 0.0, _lastValue = 0.0;
-    uint32_t _filterTimer = 0;
-    uint16_t _filterInterval = 0;
+    float _coef = 0.0, _fil = 0.0;
+    uint32_t _tmr = 0;
+    int _prd = 0;
 };
 #endif
