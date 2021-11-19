@@ -363,11 +363,16 @@ void GMedian_tree <T, Size> ::remove (node * value)
     else
         from = remove_right(value);
     
+    node * prev = from;
     while (from != nullptr)
     {
         from->size--;
-        from = from->balance()->parent;
+        prev = from->balance();
+        from = prev->parent;
     }
+
+    if (prev != nullptr)
+        root = prev;
 }
 
 template <typename T, size_t Size>
@@ -392,6 +397,12 @@ typename GMedian_tree <T, Size> ::node * GMedian_tree <T, Size> ::find (size_t p
     
     return cur;
 }
+
+template <typename T>
+struct GMedian_tree <T, 0>
+{
+    ~GMedian_tree () = delete;
+};
 
 
 #endif
