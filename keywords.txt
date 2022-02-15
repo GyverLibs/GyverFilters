@@ -22,7 +22,7 @@ FastFilter	KEYWORD1
 
 setK	KEYWORD2
 setCoef	KEYWORD2
-setStep	KEYWORD2
+setPeriod	KEYWORD2
 filteredTime	KEYWORD2
 filtered	KEYWORD2
 setParameters	KEYWORD2

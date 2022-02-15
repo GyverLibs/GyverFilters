@@ -7,7 +7,7 @@ class GFilterRA {
 public:
     GFilterRA(){}
     
-    GFilterRA(float coef, int interval) {
+    GFilterRA(float coef, uint16_t interval) {
         _coef = coef;
         _prd = interval;
     }
@@ -20,37 +20,30 @@ public:
         _coef = coef;
     }
     
-    void setStep(int interval) {
+    void setPeriod(uint16_t interval) {
         _prd = interval;
-    }
-
-    float filteredTime(int value) {
-        if (millis() - _tmr >= _prd) {
-            _tmr = millis();
-            filtered(value);
-        }
-        return _fil;
     }
 
     float filteredTime(float value) {
         if (millis() - _tmr >= _prd) {
-            _tmr = millis();
+            _tmr += _prd;
             filtered(value);
         }
         return _fil;
     }
 
-    float filtered(int value) {
-        return _fil += (float)(value - _fil) * _coef;
-    }
-
     float filtered(float value) {
-        return _fil += (float)(value - _fil) * _coef;
+        return _fil += (value - _fil) * _coef;
+    }
+    
+    //
+    void setStep(uint16_t interval) {
+        _prd = interval;
     }
     
 private:
     float _coef = 0.0, _fil = 0.0;
     uint32_t _tmr = 0;
-    int _prd = 0;
+    uint16_t _prd = 0;
 };
 #endif

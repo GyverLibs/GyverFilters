@@ -9,7 +9,7 @@
 class FastFilter {
 public:
     // коэффициент 0-31
-    FastFilter(uint8_t k = 20, int dt = 0) {
+    FastFilter(uint8_t k = 20, uint16_t dt = 0) {
         setK(k);
         setDt(dt);
     }
@@ -21,7 +21,7 @@ public:
     }
     
     // установить период фильтрации
-    void setDt(int dt) {
+    void setDt(uint16_t dt) {
         _dt = dt;
     }
     
@@ -31,17 +31,17 @@ public:
     }
     
     // установить исходное значение для фильтрации
-    void setRaw(int raw) {
+    void setRaw(long raw) {
         _raw = raw;
     }
     
     // установить фильтрованное значение
-    void setFil(int fil) {
+    void setFil(long fil) {
         _raw_f = fil;
     }
     
     // проверка на переполнение
-    bool checkPass(int val) {
+    bool checkPass(long val) {
         if (_pass == FF_PASS_MAX && val > _raw_f) {
             _raw_f = val;
             return 1;
@@ -62,7 +62,7 @@ public:
     
     // произвести расчёт сейчас
     void computeNow() {
-        _raw_f = (_k1 * _raw_f + _k2 * _raw) >> 5;
+        _raw_f = ((long)_k1 * _raw_f + _k2 * _raw) >> 5;
     }
     
     // получить фильтрованное значение
@@ -77,9 +77,9 @@ public:
     
 private:
     uint32_t _tmr = 0;
-    int _dt = 0;
+    uint16_t _dt = 0;
     uint8_t _k1 = 20, _k2 = 12;
     uint8_t _pass = 0;
-    int _raw_f = 0, _raw = 0;
+    long _raw_f = 0, _raw = 0;
 };
 #endif
