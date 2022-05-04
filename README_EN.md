@@ -1,3 +1,5 @@
+This is an automatic translation, may be incorrect in some places. See sources and examples!
+
 # GyverFilters
 GyverFilters - library with some handy filters for Arduino
 - GFilterRA - a compact alternative to the filter exponential running average (Running Average)
