@@ -33,6 +33,7 @@ public:
     }
 
     float filtered(float value) {
+        if (_first) {_fil = value; _first = false;}
         return _fil += (value - _fil) * _coef;
     }
     
@@ -43,6 +44,7 @@ public:
     
 private:
     float _coef = 0.0, _fil = 0.0;
+    bool _first = true;
     uint32_t _tmr = 0;
     uint16_t _prd = 0;
 };
